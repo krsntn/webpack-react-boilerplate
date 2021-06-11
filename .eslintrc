@@ -1,0 +1,67 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "allowImportExportEverywhere": true,
+    "ecmaVersion": 12,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": ["import", "react"],
+  "rules": {
+    "no-console": "warn",
+    "no-var": "error",
+    "no-unused-vars": "error",
+    "no-unused-expressions": "error",
+    "prefer-const": "error",
+    // [START] eslint-plugin-react ---------------
+    "react/jsx-uses-react": "error",
+    "react/boolean-prop-naming": "warn",
+    "react/button-has-type": "warn",
+    "react/prop-types": "off",
+    "react/self-closing-comp": "error",
+    "react/no-unused-state": "warn",
+    "react/no-unsafe": ["error", { "checkAliases": true }],
+    "react/no-deprecated": "error",
+    "react/prefer-es6-class": ["error", "always"],
+    "react/sort-comp": "warn",
+    "react/jsx-no-target-blank": [
+      "warn",
+      { "allowReferrer": false, "enforceDynamicLinks": "always" }
+    ],
+    // [END] eslint-plugin-react ---------------
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"]
+      }
+    ]
+  }
+}

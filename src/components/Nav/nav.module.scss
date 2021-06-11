@@ -1,0 +1,23 @@
+@import 'Styles/variables';
+
+.container {
+  margin: auto;
+  width: clamp(300px, 50%, 800px);
+  background-color: $primary-color;
+
+  .link {
+    color: $secondary-color;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: cente;
+
+    li {
+      padding: 12px;
+    }
+  }
+}
