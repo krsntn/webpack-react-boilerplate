@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './nav.module.scss';
+import { add, minus } from './test';
 
 const Nav = () => {
+  console.log(minus(add(2, 3), 3));
   return (
     <div className={styles.container}>
       <ul>

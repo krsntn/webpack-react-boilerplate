@@ -5,19 +5,20 @@
   },
   "parser": "@babel/eslint-parser",
   "parserOptions": {
+    "babelOptions": { "configFile": "./.babelrc" },
     "allowImportExportEverywhere": true,
-    "ecmaVersion": 12,
     "ecmaFeatures": {
       "jsx": true
-    },
-    "sourceType": "module"
+    }
   },
   "extends": [
+    "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "prettier"
   ],
   "settings": {
+    "import/resolver": "webpack", // this will follow webpack's resolve
     "react": {
       "version": "detect"
     }
@@ -45,6 +46,9 @@
       { "allowReferrer": false, "enforceDynamicLinks": "always" }
     ],
     // [END] eslint-plugin-react ---------------
+
+    // [START] eslint-plugin-import ---------------
+    "import/first": "error",
     "import/order": [
       "error",
       {
@@ -63,5 +67,6 @@
         "pathGroupsExcludedImportTypes": ["builtin"]
       }
     ]
+    // [END] eslint-plugin-import ---------------
   }
 }

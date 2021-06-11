@@ -1,16 +1,17 @@
-const path = require('path');
+/* eslint-disable no-console */
+const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const BundleAnalyzerPlugin =
-  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
+// const BundleAnalyzerPlugin =
+//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Temporary workaround for HMR to work properly
 const target = isDevelopment ? 'web' : 'browserslist';
 
-console.log(process.env.NODE_ENV);
+console.log('NODE_ENV', process.env.NODE_ENV);
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -31,7 +32,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   target: target,
-  devServer: {contentBase: path.join(__dirname, 'assets'), hot: true},
+  devServer: { contentBase: path.join(__dirname, 'assets'), hot: true },
   // devtool: isDevelopment
   //   ? 'eval-cheap-module-source-map'
   //   : 'cheap-module-source-map',
@@ -100,6 +101,6 @@ module.exports = {
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
     }),
     new ESLintPlugin(),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 };
