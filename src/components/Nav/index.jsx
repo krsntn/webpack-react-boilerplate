@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './nav.module.scss';
 import { add, minus } from './test';

@@ -1,11 +1,11 @@
-import React from 'react';
+import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './styles/global.css';
 
-const Page1 = React.lazy(() => import('Pages/page1'));
-const Page2 = React.lazy(() => import('Pages/page2'));
-const Layout = React.lazy(() => import('Layouts/mainLayout'));
+const Page1 = lazy(() => import('Pages/page1'));
+const Page2 = lazy(() => import('Pages/page2'));
+const Layout = lazy(() => import('Layouts/mainLayout'));
 
 const fallbackComponent = <div>Loading...</div>;
 
@@ -29,12 +29,12 @@ const RouteWrapper = ({
 const App = () => {
   return (
     <Router>
-      <React.Suspense fallback={fallbackComponent}>
+      <Suspense fallback={fallbackComponent}>
         <Switch>
           <RouteWrapper exact path="/" component={Page1} layout={Layout} />
           <RouteWrapper path="/page2" component={Page2} layout={Layout} />
         </Switch>
-      </React.Suspense>
+      </Suspense>
     </Router>
   );
 };

@@ -31,6 +31,8 @@
     "no-unused-expressions": "error",
     "prefer-const": "error",
     // [START] eslint-plugin-react ---------------
+    "react/react-in-jsx-scope": "off",
+    "react/prefer-stateless-function": "error",
     "react/jsx-uses-react": "error",
     "react/boolean-prop-naming": "warn",
     "react/button-has-type": "warn",
@@ -48,6 +50,7 @@
     // [END] eslint-plugin-react ---------------
 
     // [START] eslint-plugin-import ---------------
+    "import/no-unresolved": [2, { "ignore": ["(jpe?g|png|gif|svg)$"] }],
     "import/first": "error",
     "import/order": [
       "error",
@@ -56,15 +59,21 @@
           "order": "asc",
           "caseInsensitive": true
         },
-        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "pathGroupsExcludedImportTypes": [""],
         "pathGroups": [
           {
             "pattern": "react",
             "group": "external",
             "position": "before"
+          },
+          {
+            "pattern": "path",
+            "group": "external",
+            "position": "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["builtin"]
+        "newlines-between": "never",
+        "warnOnUnassignedImports": true
       }
     ]
     // [END] eslint-plugin-import ---------------

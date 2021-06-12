@@ -1,12 +1,12 @@
-import React from 'react';
+import { Fragment } from 'react';
 import Nav from 'Components/Nav';
 
 const MainLayout = ({ children }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <Nav />
       {children}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

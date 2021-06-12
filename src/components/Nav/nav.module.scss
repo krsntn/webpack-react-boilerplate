@@ -1,12 +1,12 @@
-@import 'Styles/variables';
+@use 'Styles/variables';
 
 .container {
   margin: auto;
   width: clamp(300px, 50%, 800px);
-  background-color: $primary-color;
+  background-color: variables.$primary-color;
 
   .link {
-    color: $secondary-color;
+    color: variables.$secondary-color;
   }
 
   ul {

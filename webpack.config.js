@@ -1,44 +1,52 @@
 /* eslint-disable no-console */
+const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
 // const BundleAnalyzerPlugin =
 //   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const mode = process.env.NODE_ENV || 'development';
+let target = 'browserslist';
+let isProd = true;
 
-// Temporary workaround for HMR to work properly
-const target = isDevelopment ? 'web' : 'browserslist';
+if (mode === 'development') {
+  isProd = false;
+  // Temporary workaround for HMR to work properly
+  target = 'web';
+}
 
-console.log('NODE_ENV', process.env.NODE_ENV);
+console.log('NODE_ENV', mode);
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'dist'),
+    // publicPath: path.join(__dirname, 'src', 'assets'),
     filename: '[name].[contenthash].js',
     clean: true,
+    // this places all images processed in an image folder
+    assetModuleFilename: 'assets/[hash][ext][query]',
   },
-  mode: process.env.NODE_ENV || 'development',
+  mode: mode,
   resolve: {
     // modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
-      Pages: path.resolve(__dirname, 'src/pages/'),
-      Layouts: path.resolve(__dirname, 'src/layouts/'),
-      Components: path.resolve(__dirname, 'src/components/'),
-      Styles: path.resolve(__dirname, 'src/styles/'),
+      Assets: path.resolve(__dirname, 'src/assets'),
+      Pages: path.resolve(__dirname, 'src/pages'),
+      Layouts: path.resolve(__dirname, 'src/layouts'),
+      Components: path.resolve(__dirname, 'src/components'),
+      Styles: path.resolve(__dirname, 'src/styles'),
     },
     extensions: ['.js', '.jsx'],
   },
   target: target,
-  devServer: { contentBase: path.join(__dirname, 'assets'), hot: true },
-  // devtool: isDevelopment
-  //   ? 'eval-cheap-module-source-map'
-  //   : 'cheap-module-source-map',
-  // devtool: 'eval-cheap-module-source-map',
+  devServer: {
+    historyApiFallback: true,
+    // contentBase: path.join(__dirname, 'assets'),
+    hot: true,
+  },
   devtool: 'cheap-module-source-map',
-  // devtool: 'source-map',
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -54,7 +62,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/i,
+        test: /\.jsx?$/i,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
@@ -76,9 +84,9 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: isDevelopment
-                  ? '[path][name]__[local]--[hash:base64:5]'
-                  : '[hash:base64:5]',
+                localIdentName: isProd
+                  ? '[hash:base64:5]'
+                  : '[path][name]__[local]--[hash:base64:5]',
               },
             },
           },
@@ -87,18 +95,20 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpg|jpeg|png|gif|mp3|svg)$/i,
-        use: ['file-loader'],
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset',
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'Hello World',
       template: path.join(__dirname, 'src', 'index.html'),
+      favicon: path.join(__dirname, 'src', 'assets', 'favicon.png'),
     }),
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
+      filename: isProd ? '[name].[hash].css' : '[name].css',
+      chunkFilename: isProd ? '[id].[hash].css' : '[id].css',
     }),
     new ESLintPlugin(),
     // new BundleAnalyzerPlugin(),
